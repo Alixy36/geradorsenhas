@@ -9,10 +9,12 @@ const botoes = document.querySelectorAll('.parametro-senha__botao');
 const campoSenha = document.querySelector('#campo-senha');
 const checkbox = document.querySelectorAll('.checkbox');
 const forcaSenha = document.querySelector('.forca');
-
+const botaoGerar = document.querySelector( '#botao-gerar');
+ 
 
 botoes[0].onclick = diminuiTamanho;
 botoes[1].onclick = aumentaTamanho;
+botoes[2].onclick = geraSenha;
 
 function diminuiTamanho(){
     if (tamanhoSenha > 1){
