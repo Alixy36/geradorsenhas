@@ -81,27 +81,28 @@ function classificaSenha() {
 }
 
 function geraSenha() {
-    let alfabeto = '';
+    const tiposSelecionados = [];
+    const grupos = [
+        { selecionado: checkbox[0].checked, caracteres: letrasMaiusculas },
+        { selecionado: checkbox[1].checked, caracteres: letrasMinusculas },
+        { selecionado: checkbox[2].checked, caracteres: numeros },
+        { selecionado: checkbox[3].checked, caracteres: simbolos }
+    ];
 
-    if (checkbox[0].checked) {
-        alfabeto += letrasMaiusculas;
-    }
-    if (checkbox[1].checked) {
-        alfabeto += letrasMinusculas;
-    }
-    if (checkbox[2].checked) {
-        alfabeto += numeros;
-    }
-    if (checkbox[3].checked) {
-        alfabeto += simbolos;
-    }
+    grupos.forEach((grupo) => {
+        if (grupo.selecionado) {
+            tiposSelecionados.push(grupo.caracteres);
+        }
+    });
 
-    if (alfabeto.length === 0) {
+    if (tiposSelecionados.length === 0) {
         campoSenha.value = '';
         entropiaElemento.textContent = '';
         alert('Selecione ao menos um tipo de caractere para gerar a senha.');
         return;
     }
+
+    let alfabeto = tiposSelecionados.join('');
 
     const tamanhoAlfabeto = alfabeto.length;
     const entropia = tamanhoSenha * Math.log2(tamanhoAlfabeto);
@@ -120,10 +121,20 @@ function geraSenha() {
 
     do {
         senha = '';
-        for (let i = 0; i < tamanhoSenha; i++) {
+
+        grupos.forEach((grupo) => {
+            if (grupo.selecionado) {
+                const indice = Math.floor(Math.random() * grupo.caracteres.length);
+                senha += grupo.caracteres[indice];
+            }
+        });
+
+        while (senha.length < tamanhoSenha) {
             const indiceAleatorio = Math.floor(Math.random() * alfabeto.length);
             senha += alfabeto[indiceAleatorio];
         }
+
+        senha = senha.split('').sort(() => Math.random() - 0.5).join('');
         tentativa++;
 
         if (tentativa > 1000) {
