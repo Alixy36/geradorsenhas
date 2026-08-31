@@ -50,6 +50,19 @@ body{
     width: 70%;
 }
 
+#botao-gerar{
+    background-color: var(--borda);
+    color: var(--branco);
+    border: none;
+    border-radius: 8px;
+    padding: 16px 24px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 16px;
+    display: block;
+    width: 100%;
+}
+
 #campo-senha:focus{
     outline: none;
 }
